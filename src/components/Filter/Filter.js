@@ -1,11 +1,10 @@
 import React from 'react';
 import s from './Filter.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { setFilter } from '../../redux/contacts/contacts-actions';
-import { getFilter } from '../../redux/contacts/contacts-selectors';
+import { contactsActions, contactsSelectors } from 'redux/contacts';
 
 export const Filter = () => {
-  const filter = useSelector(getFilter);
+  const filter = useSelector(contactsSelectors.getFilter);
   const dispatch = useDispatch();
 
   return (
@@ -13,7 +12,9 @@ export const Filter = () => {
       Find Contacts by name
       <input
         type="text"
-        onChange={evt => dispatch(setFilter(evt.currentTarget.value))}
+        onChange={evt =>
+          dispatch(contactsActions.setFilter(evt.currentTarget.value))
+        }
         name="filter"
         value={filter}
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
