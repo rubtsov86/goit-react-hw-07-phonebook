@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
 import {
-  addContactsRequest,
   addContactSuccses,
   addContactError,
   deleteContactSuccses,
-  fetchContactSuccses,
   setFilter,
 } from './contacts-actions';
 import { fetchContacts } from './contacts-operations';
