@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import s from './Phonebook.module.css';
-import { addContact } from '../../redux/contacts/contacts-actions';
+
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts } from '../../redux/contacts/contacts-selectors';
+import { contactsOperations, contactsSelectors } from 'redux/contacts';
 
 function Phonebook() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(contactsSelectors.getContacts);
   const dispatch = useDispatch();
 
   const handleInput = evt => {
@@ -42,7 +42,7 @@ function Phonebook() {
 
     isNameInContacts
       ? alert(`${name} is already in contacts`)
-      : dispatch(addContact(name, number));
+      : dispatch(contactsOperations.addContact({ name, number }));
   };
 
   return (
