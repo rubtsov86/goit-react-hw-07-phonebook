@@ -2,12 +2,15 @@ import { useState } from 'react';
 import s from './Phonebook.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { contactsOperations, contactsSelectors } from 'redux/contacts';
+import toast from 'react-hot-toast';
+import { Circles } from 'react-loader-spinner';
 
 function Phonebook() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const contacts = useSelector(contactsSelectors.getContacts);
+  const loading = useSelector(contactsSelectors.getLoading);
   const dispatch = useDispatch();
 
   const handleInput = evt => {
@@ -26,7 +29,6 @@ function Phonebook() {
   const handleSubmit = evt => {
     evt.preventDefault();
     addContactToContacts(name, number);
-    reset();
   };
 
   const reset = () => {
@@ -39,9 +41,15 @@ function Phonebook() {
       .map(({ name }) => name.toLowerCase())
       .includes(name.toLowerCase());
 
-    isNameInContacts
-      ? alert(`${name} is already in contacts`)
-      : dispatch(contactsOperations.addContact({ name, number }));
+    if (isNameInContacts) {
+      toast.error(`${name} is already in contacts`, {
+        duration: 3000,
+        position: 'top-center',
+      });
+    } else {
+      dispatch(contactsOperations.addContact({ name, number }));
+      reset();
+    }
   };
 
   return (
@@ -75,7 +83,11 @@ function Phonebook() {
       </label>
 
       <button className={s.button} type="submit">
-        Add contact
+        {loading ? (
+          <Circles height="15" width="15" color="blue" ariaLabel="loading" />
+        ) : (
+          'Add contact'
+        )}
       </button>
     </form>
   );

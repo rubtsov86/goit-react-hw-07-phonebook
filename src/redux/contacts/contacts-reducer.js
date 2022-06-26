@@ -7,6 +7,16 @@ import {
   addContact,
 } from './contacts-operations';
 
+const loading = createReducer(null, {
+  [deleteContact.pending]: (_, action) => action.meta.arg,
+  [deleteContact.fulfilled]: (_, { payload }) => false,
+  [deleteContact.rejected]: (_, { payload }) => false,
+
+  [addContact.pending]: (_, action) => true,
+  [addContact.fulfilled]: (_, action) => false,
+  [addContact.rejected]: (_, action) => false,
+});
+
 const itemReducer = createReducer([], {
   [fetchContacts.fulfilled]: (_, { payload }) => payload,
 
@@ -34,5 +44,6 @@ const filterReducer = createReducer('', {
 export const contactsReduser = combineReducers({
   items: itemReducer,
   error,
+  loading,
   filter: filterReducer,
 });

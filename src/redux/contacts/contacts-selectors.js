@@ -5,3 +5,4 @@ export const getFilteredContacts = state =>
     contact.name.toLowerCase().includes(getFilter(state).toLowerCase())
   );
 export const getError = state => state.contacts.error;
+export const getLoading = state => state.contacts.loading;

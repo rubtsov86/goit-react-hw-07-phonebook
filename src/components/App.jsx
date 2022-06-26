@@ -4,6 +4,7 @@ import ContactList from './ContactList';
 import Filter from './Filter';
 import { useSelector } from 'react-redux';
 import { contactsSelectors } from 'redux/contacts';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const error = useSelector(contactsSelectors.getError);
@@ -23,6 +24,14 @@ function App() {
       <h2>Contacts</h2>
       <Filter />
       {error ? <h2>{error}, please try latter</h2> : <ContactList />}
+      <Toaster
+        toastOptions={{
+          className: '',
+          style: {
+            fontSize: 16,
+          },
+        }}
+      />
     </div>
   );
 }

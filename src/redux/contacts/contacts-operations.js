@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import toast from 'react-hot-toast';
 
 axios.defaults.baseURL = `https://62a758f5bedc4ca6d7c778ce.mockapi.io`;
 
@@ -8,6 +9,10 @@ export const addContact = createAsyncThunk(
   async (contact, { rejectWithValue }) => {
     try {
       const { data } = await axios.post('/contacts', contact);
+      toast.success(`add contact ${data.name}`, {
+        duration: 1500,
+        position: 'top-center',
+      });
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -20,6 +25,10 @@ export const deleteContact = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const { data } = await axios.delete(`/contacts/${id}`);
+      toast.success(`delete contact ${data.name}`, {
+        duration: 1500,
+        position: 'top-center',
+      });
       return data.id;
     } catch (error) {
       return rejectWithValue(error.message);
